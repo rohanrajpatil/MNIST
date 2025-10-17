@@ -27,4 +27,26 @@ from sklearn.linear_model import SGDClassifier
 sgd = SGDClassifier(random_state = 42)
 sgd.fit(x_train,yt5)
 x = sgd.predict([x[0]])
-print(x)
+
+from sklearn.ensemble import GradientBoostingClassifier
+
+
+rfc = GradientBoostingClassifier()
+
+from sklearn.model_selection import cross_val_predict
+
+rfcc = cross_val_predict(rfc,x_train, yt5, cv = 3, method = "predict_proba")
+
+ysf = rfcc[:,1]
+
+from sklearn.metrics import precision_recall_curve, f1_score, roc_auc_score, precision_score, recall_score
+ 
+p, r, t = precision_recall_curve(yt5, ysf)
+
+
+
+
+ypredfor = (ysf>=0.5)
+
+
+from sklearn.neighbors import KNeighborsClassifier
